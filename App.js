@@ -1,21 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+// In App.js in a new project
 
-export default function App() {
+import * as React from "react";
+
+import { Text, View } from "react-native";
+import { applyMiddleware, createStore } from 'redux';
+
+import {HomeRouter} from './src/modules/home/RouterConfig';
+import LoginScreen from "./src/modules/login/view/LoginScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { Provider } from "react-redux";
+import createSagaMiddleware from "redux-saga";
+import { createStackNavigator } from "@react-navigation/stack";
+import {rootReducer} from './src/rootReducer';
+import rootSaga from "./src/rootSaga";
+
+const Stack = createStackNavigator();
+
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
+// export const persistor = persistStore(store);
+sagaMiddleware.run(rootSaga);
+
+function App(route) {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name= 'login' component={LoginScreen} 
+         
+          />
+          <Stack.Screen name = 'home' component = {HomeRouter} options={{ headerShown: false}}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
