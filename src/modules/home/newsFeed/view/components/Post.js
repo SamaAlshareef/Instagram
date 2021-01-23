@@ -5,20 +5,18 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View
+  View,
 } from "react-native";
-import React, {useEffect} from "react";
+
+import React from "react";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
 const Post = ({ accountName, uri }) => {
-	useEffect(() => {
-		console.log("URII ", uri)
-	}, [])
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle = {styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.profilePicContainer}>
           <Image
             source={require("../../../../../../cat.png")}
@@ -26,10 +24,7 @@ const Post = ({ accountName, uri }) => {
           />
           <Text> {accountName}</Text>
         </View>
-        <Image
-          source={{uri:uri}}
-          style={styles.imageContainer}
-        />
+        <Image source={{ uri: uri }} style={styles.imageContainer} />
       </ScrollView>
     </View>
   );
@@ -47,8 +42,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     paddingLeft: 10,
-		paddingBottom: 10,
-		paddingTop:10
+    paddingBottom: 10,
+    paddingTop: 10,
   },
   profilePic: {
     width: 40,
