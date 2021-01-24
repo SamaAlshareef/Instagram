@@ -4,7 +4,8 @@ import { Dimensions, FlatList, StyleSheet, Text, View } from 'react-native';
 
 import Header from './components/Header';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}) => {
+ 
   return (
     <View style={styles.container}>
       <Header name={'Sama'} age= {24} email={'samaelshareef@gmail.com'} />

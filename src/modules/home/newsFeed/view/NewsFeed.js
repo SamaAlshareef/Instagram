@@ -25,7 +25,7 @@ const DATA = [
   },
 ];
 
-const NewsFeedScreen = ({ getPosts, navigation }) => {
+const NewsFeedScreen = ({ getPosts, navigation }) => { 
   useEffect(() => {
     getPosts();
   }, []);

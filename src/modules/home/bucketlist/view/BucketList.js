@@ -5,27 +5,27 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import InputField from "../../../login/view/components/InputField";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Wish from './components/wishComponent';
+import Wish from "./components/wishComponent";
 import { primaryColor } from "../../../../core/Colors";
 
 const width = Dimensions.get("window").width;
 
-const BucketListScreen = () => {
+const BucketListScreen = ({navigation}) => {
   const [bucketList, setBucketList] = useState([]);
   const [wish, setWish] = useState();
 
-  useEffect(() => {
-    // let x = getMyObject();
-    // console.log("Inital ", x)
-    // setBucketList([ x]);
-  }, [])
+  useEffect(async () => {
+    let listStored = await getMyObject();
+    console.log("list stored ", listStored);
+    setBucketList([...listStored]);
+  }, []);
 
   const storeData = async (value) => {
     try {
@@ -46,10 +46,11 @@ const BucketListScreen = () => {
   };
 
   const addWish = async (wish) => {
+    console.log("PRESSED");
     let storedBucketList = await getMyObject();
-    storeData([wish, ...storedBucketList]);
-    setBucketList([wish, ...storedBucketList]);
-    setWish('');
+    storeData(storedBucketList.concat(wish));
+    setBucketList([...bucketList, wish]);
+    setWish("");
   };
 
   const renderItem = ({ item }) => {
@@ -60,37 +61,36 @@ const BucketListScreen = () => {
   };
 
   return (
-    
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={{ flexGrow:1}}>
-      <View style={{ flexDirection: "row", flex: 0.2, paddingTop:10 }}>
-        <InputField
-          onChangeText={(text) => setWish(text.trim())}
-          placeholder={"Add a Wish"}
-          keyboardType={"default"}
-          width={width - 100}
-          value ={wish}
-        />
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => addWish(wish)}
-        >
-          <Ionicons name={"add"} color={"white"} size={50} />
-        </TouchableOpacity>
-      </View>
-
-      <View style={{ flex: 0.5 }}>
-        {bucketList.map((item, index) => (
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={{ flexDirection: "row", flex: 0.2, paddingTop: 10 }}>
+          <InputField
+            onChangeText={(text) => setWish(text.trim())}
+            placeholder={"Add a Wish"}
+            keyboardType={"default"}
+            width={width - 100}
+            value={wish}
+          />
           <TouchableOpacity
-            key={index}
+            style={styles.addButton}
+            onPress={() => addWish(wish)}
           >
-            <Wish wish ={item} />
+            <Ionicons name={"add"} color={"white"} size={50} />
           </TouchableOpacity>
-        ))}
-      </View>
+        </View>
+
+        <View style={{ flex: 0.5 }}>
+          {bucketList.map((item, index) => (
+            <TouchableOpacity key={index}>
+              <Wish wish={item} />
+            </TouchableOpacity>
+          ))}
+        </View>
       </ScrollView>
     </View>
-   
   );
 };
 
@@ -110,9 +110,9 @@ const styles = StyleSheet.create({
     marginTop: 3,
     marginLeft: 5,
   },
-  listStyle:{
-    fontSize:30,
-    fontWeight:'800'
-  }
+  listStyle: {
+    fontSize: 30,
+    fontWeight: "800",
+  },
 });
 export default BucketListScreen;

@@ -9,11 +9,37 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
-export const RouterConfig = () => {
+export const NewsFeedRouterConfig = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name= 'newsfeed' component={NewsFeedScreen}/>
-      <Stack.Screen name = 'addPost' component = {AddPost}/>
+      <Stack.Screen name= 'newsfeed' component={NewsFeedScreen}
+       options = {{
+        title: 'NewsFeed',
+        headerStyle: {
+          backgroundColor: 'white',
+          elevation: 0,
+        },
+        headerTitleAlign: 'center',
+    
+        headerTitleStyle: {
+          fontSize: 17,
+        },
+        headerTintColor: 'black',
+      }}/>
+      <Stack.Screen name = 'addPost' component = {AddPost}
+      options = {{
+        title: 'Add Post',
+        headerStyle: {
+          backgroundColor: 'white',
+          elevation: 0,
+        },
+        headerTitleAlign: 'center',
+    
+        headerTitleStyle: {
+          fontSize: 17,
+        },
+        headerTintColor: 'black',
+      }}/>
     </Stack.Navigator>
     
   );
