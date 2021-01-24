@@ -5,8 +5,8 @@ import { Text, View } from 'react-native';
 import BucketListScreen from './bucketlist/view/BucketList';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import NewsFeedScreen from './newsFeed/view/NewsFeed';
 import ProfileScreen from './posts/view/Profile';
+import {RouterConfig} from './newsFeed/RouterConfig';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -53,7 +53,7 @@ export const HomeRouter = () => {
     >
       <Tab.Screen 
         name="newsFeed" 
-        component={NewsFeedScreen} 	
+        component={RouterConfig} 	
         options={{
           title: 'NewsFeed',
          
