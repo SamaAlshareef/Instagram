@@ -11,7 +11,7 @@ import {all, put, takeEvery} from 'redux-saga/effects';
 import {GET_POSTS_FAIL} from '../../../newsFeed/state/action/actionTypes';
 import axios from 'axios';
 
-export function* getProfile (action){
+export function* getProfile (){
 
   let profileDetails = '';
   let error = '';
@@ -19,7 +19,7 @@ export function* getProfile (action){
   let response = axios
   ({
     method: 'get',
-    url: 'http://192.168.1.121:3000/profile'})
+    url: 'http://10.0.0.2:3000/profile'})
   .then(function (response) {
     console.log("hello ")
     // handle success
@@ -53,7 +53,7 @@ export function* getMyPosts (action){
   let response = axios
   ({
     method: 'get',
-    url: 'http://192.168.1.121:3000/posts'})
+    url: 'http://10.0.0.2:3000/posts'})
   .then(function (response) {
     console.log("hello ")
     // handle success

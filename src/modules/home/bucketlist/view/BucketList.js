@@ -23,8 +23,7 @@ const BucketListScreen = ({navigation}) => {
 
   useEffect(() => {
     let listStored =  getMyObject();
-    console.log("list stored ", listStored);
-    setBucketList([listStored]);
+    typeof(listStored) !== 'object'? setBucketList([listStored]) : null;
   }, []);
 
   const storeData = async (value) => {
@@ -53,12 +52,17 @@ const BucketListScreen = ({navigation}) => {
     setWish("");
   };
 
-  const renderItem = ({ item }) => {
-    console.log("hello sama ", item);
-    <Text style={{ backgroundColor: "black", fontSize: 40 }}>
-      {item.title}
-    </Text>;
-  };
+  // const renderItem = ({ item }) => {
+  //   console.log("hello sama ", item);
+  //   <Text style={{ backgroundColor: "black", fontSize: 40 }}>
+  //     {item.title}
+  //   </Text>;
+  // };
+
+  const renderItem = ({ item }) => (
+    <Wish wish={item}/>
+  );
+
 
   return (
     <View style={styles.container}>
@@ -83,11 +87,16 @@ const BucketListScreen = ({navigation}) => {
         </View>
 
         <View style={{ flex: 0.5 }}>
-          {bucketList.map((item, index) => (
+        <FlatList
+        data={bucketList}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
+          {/* {  bucketList.map((item, index) => (
             <TouchableOpacity key={index}>
               <Wish wish={item} />
             </TouchableOpacity>
-          ))}
+          ))} */}
         </View>
       </ScrollView>
     </View>

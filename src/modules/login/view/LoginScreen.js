@@ -42,7 +42,7 @@ const LoginScreen = ({ navigation, loginRequest, error, loading }) => {
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View style={{ flex: 0.2 }}>
-        <Ionicons name={"logo-instagram"} size={100} color={primaryColor} />
+        <Ionicons name={"logo-instagram"} size={100} color={'tomato'} />
       </View>
 
       <View style={styles.filedContainer}>
@@ -70,8 +70,8 @@ const LoginScreen = ({ navigation, loginRequest, error, loading }) => {
         <LargeButton
           title={"Login"}
           disabled={false}
-          backgroundColor={primaryColor}
-          borderColor={primaryColor}
+          backgroundColor={'tomato'}
+          borderColor={'tomato'}
           onPress={() => loginPressed(loginForm)}
         />
         {loading ? (

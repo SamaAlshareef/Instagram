@@ -13,10 +13,10 @@ export function* signInRequest (action){
 
   let response = axios({
     method: 'post',
-    url: '/localhost/login',
+    url: 'http://10.0.0.2/login',
     data: {
-      email: 'Fred',
-      password: 'Flintstone'
+      email: action.payload.username,
+      password: action.payload.password
     }
   })
   .then(function (response) {

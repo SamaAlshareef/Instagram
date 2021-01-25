@@ -13,15 +13,20 @@ import React from "react";
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
-const Post = ({ accountName, uri }) => {
+const Post = ({ accountName, uri, profilePic }) => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.profilePicContainer}>
-          <Image
+          {
+            !profilePic? <Image
             source={require("../../../../../../cat.png")}
             style={styles.profilePic}
           />
+          :
+          null
+          }
+         
           <Text> {accountName}</Text>
         </View>
         <Image source={{ uri: uri }} style={styles.imageContainer} />

@@ -30,7 +30,7 @@ function App(route) {
             name="login"
             component={LoginScreen}
             options={{
-              title: "BucketList",
+              title: "Login",
               headerStyle: {
                 backgroundColor: "white",
                 elevation: 0,

@@ -7,7 +7,7 @@ const width = Dimensions.get('window').width;
 const Header = ({name, email, age}) => {
   return (
     <View style={styles.container}>
-      <View style={{padding:20}}>
+      <View style={{paddingTop:20}}>
         <Image
           style={styles.profilePic}
           source = {{uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYSu5D8riIS7aVn2UbNqxOS1k2MdaUO0mhIw&usqp=CAU'}}/>
@@ -19,11 +19,11 @@ const Header = ({name, email, age}) => {
         </View> 
       </View>
       <View
-        style={{
-          borderBottomColor: 'black',
-          borderBottomWidth: 1,
-          width
-        }}
+        // style={{
+        //   borderBottomColor: 'white',
+        //   borderBottomWidth: 1,
+        //   width
+        // }}
       />
     </View>
   );
