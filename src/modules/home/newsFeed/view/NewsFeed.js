@@ -25,7 +25,7 @@ const DATA = [
   },
 ];
 
-const NewsFeedScreen = ({ getPosts, navigation }) => { 
+const NewsFeedScreen = ({ getPosts, navigation }) => {
   useEffect(() => {
     getPosts();
   }, []);
@@ -35,13 +35,15 @@ const NewsFeedScreen = ({ getPosts, navigation }) => {
 
   return (
     <View>
-            <Button onPress={()=> navigation.push('addPost')} title='Add Post'></Button>
+      <Button
+        onPress={() => navigation.push("addPost")}
+        title="Add Post"
+      ></Button>
       <FlatList
         data={DATA}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
-
     </View>
   );
 };

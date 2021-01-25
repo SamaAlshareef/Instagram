@@ -13,7 +13,9 @@ export function* getPosts (action){
   let error = '';
   console.log("Hi from sagaa")
   let response = axios
-  .get('http://192.168.1.7:3000/posts')
+  ({
+    method: 'get',
+    url: 'http://192.168.1.121:3000/posts'})
   .then(function (response) {
     console.log("hello ")
     // handle success

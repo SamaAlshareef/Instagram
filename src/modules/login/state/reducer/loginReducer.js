@@ -9,7 +9,8 @@ const initialState = {
   username: '',
   password: '',
   loggedIN:false,
-  error: false
+  error: false, 
+  laoding : false
 }
 
 const loginReducer = (state =initialState, action) => {
@@ -20,21 +21,22 @@ const loginReducer = (state =initialState, action) => {
     newState.password = action.payload.password;
     return { 
       ...state,
-      newState
+      newState,
+      loading: true
     }
   case LOGIN_REQUEST_SUCCESS:
     const signedInState  = {...state};
     signedInState.loggedIN = true;
     return {
       ...state,
-      signedInState
+      signedInState, 
+      loading:false
     }
   case LOGIN_REQUEST_FAIL:
-    const errorState = {...initialState};
-    errorState.error = true;
     return {
-      ...state,
-      errorState
+      ...initialState,
+      error:true,
+      loading:false
     }
   default:
     return {...state};

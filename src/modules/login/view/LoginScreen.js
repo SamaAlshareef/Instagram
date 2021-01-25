@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Image,
   ImageBackground,
   KeyboardAvoidingView,
@@ -9,7 +10,6 @@ import {
   View,
 } from "react-native";
 import React, { useState } from "react";
-import { black, mainColor, white } from "../../../core/Colors";
 
 import InputField from "./components/InputField";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -23,7 +23,7 @@ const initialLoginForm = {
   password: "",
 };
 
-const LoginScreen = ({ navigation, loginRequest }) => {
+const LoginScreen = ({ navigation, loginRequest, error, loading }) => {
   const [loginForm, setLoginForm] = useState(initialLoginForm);
 
   const updateLoginForm = (name, value) => {
@@ -34,6 +34,7 @@ const LoginScreen = ({ navigation, loginRequest }) => {
   };
 
   const loginPressed = (loginForm) => {
+    console.log("Login ", loginForm);
     loginRequest(loginForm);
     navigation.navigate("home");
   };
@@ -61,6 +62,11 @@ const LoginScreen = ({ navigation, loginRequest }) => {
             secureTextEntry={true}
           />
         </View>
+        {
+          error?
+          <Text style={{ color:'red'}}>Incorrect Credentials</Text>
+          : null
+        }
         <LargeButton
           title={"Login"}
           disabled={false}
@@ -68,16 +74,12 @@ const LoginScreen = ({ navigation, loginRequest }) => {
           borderColor={primaryColor}
           onPress={() => loginPressed(loginForm)}
         />
+        {loading ? (
+          <View style={styles.loaderStyle}>
+            <ActivityIndicator size="large" color={primaryColor} />
+          </View>
+        ) : null}
       </View>
-
-      {/* {loading ?
-       <View style={styles.loaderStyle}>
-         <ActivityIndicator size="large" color={mainColor} />
-       </View>
-       : */}
-
-      {/* } */}
-      {/* </ScrollView> */}
     </KeyboardAvoidingView>
   );
 };
@@ -102,10 +104,18 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, (dispatch) => {
-  return {
-    loginRequest: (data) => {
-      dispatch(loginRequest(data));
-    },
-  };
-})(LoginScreen);
+export default connect(
+  ({ loginReducer }) => {
+    return {
+      error: loginReducer.error,
+      loading: loginReducer.loading,
+    };
+  },
+  (dispatch) => {
+    return {
+      loginRequest: (data) => {
+        dispatch(loginRequest(data));
+      },
+    };
+  }
+)(LoginScreen);

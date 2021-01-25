@@ -21,10 +21,10 @@ const BucketListScreen = ({navigation}) => {
   const [bucketList, setBucketList] = useState([]);
   const [wish, setWish] = useState();
 
-  useEffect(async () => {
-    let listStored = await getMyObject();
+  useEffect(() => {
+    let listStored =  getMyObject();
     console.log("list stored ", listStored);
-    setBucketList([...listStored]);
+    setBucketList([listStored]);
   }, []);
 
   const storeData = async (value) => {
