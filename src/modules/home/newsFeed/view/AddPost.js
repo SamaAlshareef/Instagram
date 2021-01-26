@@ -8,11 +8,10 @@ import {
   View
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import { addPost, getPosts } from "../state/action/postsAction";
 
 import Post from "./components/Post";
-import { add } from "react-native-reanimated";
 import { connect } from "react-redux";
-import { getPosts, addPost } from "../state/action/postsAction";
 
 const DATA = [
   {
@@ -33,14 +32,14 @@ const DATA = [
 ];
 
 const AddPost = ({ getPosts, posts, addPost }) => {
-  const [post, addPost] = useState();
+  const [post, addedPost] = useState();
 
   useEffect(() => {
     getPosts();
   }, []);
   const renderItem = ({ item }) => (
     <TouchableOpacity 
-      onPress={()=>{addPost(item)}} 
+      onPress={()=>{addedPost(item)}} 
       disabled = {post? false: true} >
       <Post uri={ item.uri} profilePic={true}/>
     </TouchableOpacity>
@@ -95,7 +94,7 @@ export default connect(
         dispatch(getPosts());
       },
       addPost:(post)=>{
-        dispatch(addPost());
+        dispatch(addPost(post));
       }
     };
   }
