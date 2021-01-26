@@ -4,87 +4,71 @@ import {
   ADD_POST_SUCCESS,
   GET_POSTS_FAIL,
   GET_POSTS_REQUEST,
-  GET_POSTS_SUCCESS
-} from '../action/actionTypes';
-import {all, put, takeEvery} from 'redux-saga/effects';
+  GET_POSTS_SUCCESS,
+} from "../action/actionTypes";
+import { all, put, takeEvery } from "redux-saga/effects";
 
-import axios from 'axios';
+import axios from "axios";
 
-export function* getPosts(action){
-
-  let posts = '';
-  let error = '';
+export function* getPosts(action) {
+  let posts = "";
+  let error = "";
   console.log("Hi from sagaa");
-  let response =  axios.get('http://10.0.0.2:3000/news-feed');
-  console.log("REsponsee ", response)
-  .then(function (response) {
-    console.log("hello ")
-    // handle success
-    posts = response.data
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-    error = error
-  })
-  .then(function () {
-    // always executed
-    console.log("What noww")
-    
-  });
-  if(posts != ''){
-    yield put({
-      type: GET_POSTS_SUCCESS,
-      payload: posts
-    })
-  }
-  else {
+
+  let response = yield axios
+    .get("http://10.0.2.2:3000/news-feed")
+    .catch((e) => {
+      console.log(e);
+      error = true;
+    });
+
+  // console.log("Responseeee: ", JSON.stringify(response.data));
+
+  if (response) {
+    if (response.status == 200) {
+      posts = response.data;
+      yield put({
+        type: GET_POSTS_SUCCESS,
+        payload: posts,
+      });
+    }
+  } else {
+    error = true;
     yield put({
       type: GET_POSTS_FAIL,
-      payload: error
-    })
+      payload: error,
+    });
   }
- 
 }
 
-export function* addPost(action){
+export function* addPost(action) {
+  let error = "";
 
-  let error = '';
-  
-  let response =  axios.post('http://10.0.0.2:3000/news-feed', action.payload)
+  console.log("Action to add a post ", action.payload)
+  let response = yield axios
+    .post("http://10.0.2.2:3000/news-feed", action.payload)
+    .catch((e) => {
+      console.log(e.message);
+      error = true;
+    });
 
-  .then(function (response) {
-    console.log("hello ")
-    // handle success
-    
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-    error = error
-  })
-  .then(function () {
-    // always executed
-    
-  });
-  if(error){
-    yield put({
-      type: ADD_POST_FAIL,
-      payload: error
-    })
+  if (response) {
+    if (response.status == 200) {
+      yield put({
+        type: ADD_POST_SUCCESS,
+      });
+    } else {
+      yield put({
+        type: ADD_POST_FAIL,
+        payload: error,
+      });
+    }
   }
-  else {
-    yield put({
-      type: ADD_POST_SUCCESS,
-    })
-  }
- 
 }
-
 
 export default function* rootSaga() {
   yield all([
-    yield takeEvery(GET_POSTS_REQUEST, getPosts),
-    yield takeEvery(ADD_POST_REQUEST, addPost),
+    takeEvery(GET_POSTS_REQUEST, getPosts),
+    takeEvery(ADD_POST_REQUEST, addPost),
   ]);
 }

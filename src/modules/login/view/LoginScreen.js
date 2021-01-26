@@ -9,7 +9,7 @@ import {
   Text,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import InputField from "./components/InputField";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -24,23 +24,34 @@ const initialLoginForm = {
 };
 
 const LoginScreen = ({ navigation, loginRequest, error, loading }) => {
+  useEffect(() => {
+   console.log("Reducerr ", error)
+  }, [error])
   const [loginForm, setLoginForm] = useState(initialLoginForm);
+  const [valid, setValid] = useState(true);
+
 
   const updateLoginForm = (name, value) => {
-    console.log("Hello sama from ", name, " ", value);
     let newLoginForm = { ...loginForm };
     newLoginForm[name] = value;
     setLoginForm(newLoginForm);
   };
 
   const loginPressed = (loginForm) => {
-    console.log("Login ", loginForm);
     loginRequest(loginForm);
-    navigation.navigate("home");
+    if(loginForm.password != '' && loginForm.username != '' && !error){
+
+      console.log("Hello from iff")
+      setValid(true);
+      navigation.navigate("home");
+    }
+    setValid(false);
+     
   };
 
   return (
     <KeyboardAvoidingView style={styles.container}>
+      <ScrollView contentContainerStyle = {styles.container}>
       <View style={{ flex: 0.2 }}>
         <Ionicons name={"logo-instagram"} size={100} color={'tomato'} />
       </View>
@@ -63,7 +74,7 @@ const LoginScreen = ({ navigation, loginRequest, error, loading }) => {
           />
         </View>
         {
-          error?
+          !valid?
           <Text style={{ color:'red'}}>Incorrect Credentials</Text>
           : null
         }
@@ -80,6 +91,7 @@ const LoginScreen = ({ navigation, loginRequest, error, loading }) => {
           </View>
         ) : null}
       </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };

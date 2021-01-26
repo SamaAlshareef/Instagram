@@ -16,32 +16,25 @@ export function* getProfile (){
   let profileDetails = '';
   let error = '';
   console.log("Hi from Profile sagaa")
-  let response = axios
-  ({
-    method: 'get',
-    url: 'http://10.0.0.2:3000/profile'})
-  .then(function (response) {
-    console.log("hello ")
-    // handle success
-    profileDetails = response.data
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-    error = error
-  })
+  let response = yield axios.get("http://10.0.2.2:3000/profile")
+  .catch((e) => {
+    console.log(e);
+    error = true;
+  });
   
-  if( response.success){
-    yield put({
-      type: GET_PROFILE_SUCCESS,
-      payload: profileDetails
-    })
-  }
-  else {
-    yield put({
-      type: GET_PROFILE_FAIL,
-      payload: error
-    })
+  if (response) {
+    if (response.status == 200) {
+      yield put({
+        type: GET_PROFILE_SUCCESS,
+        payload: response.data
+      })
+    }
+    else {
+      yield put({
+        type: GET_PROFILE_FAIL,
+        payload: error
+      })
+    }
   }
 }
 

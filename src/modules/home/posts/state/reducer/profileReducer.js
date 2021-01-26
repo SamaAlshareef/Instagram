@@ -7,6 +7,8 @@ import {
 }
 from '../action/actionTypes';
 
+import { act } from 'react-test-renderer';
+
 const initialState = { 
   name:'',
   email:'',
@@ -27,21 +29,19 @@ const profileReducer = (state =initialState, action) => {
       newState
     }
   case GET_PROFILE_SUCCESS:
-    const {name,age,email}  = action.payload;
-    const profile= {...state};
-    profile[name]= name;
-    profile[age]= age;
-    profile[email]= email;
+    const {name,age,email}  = action.payload[0];
+    const profile= {...initialState};
+    profile["name"]= name;
+    profile["age"]= age;
+    profile["email"]= email;
     return {
-      ...state,
-      profile
+      ...profile
     }
   case GET_PROFILE_FAIL:
     const errorState = {...initialState};
     errorState.error = true;
     return {
-      ...state,
-      errorState
+      ...errorState
     }
   case GET_MY_POSTS_SUCCESS:
     return {

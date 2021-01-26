@@ -5,6 +5,8 @@ import Header from "./components/Header";
 import Post from "../../newsFeed/view/components/Post";
 import { connect } from "react-redux";
 import { getProfile } from "../state/action/profileActions";
+import postsReducer from '../../newsFeed/state/reducer/postsReducer';
+import profileReducer from '../state/reducer/profileReducer';
 
 const posts = [
   {
@@ -33,9 +35,10 @@ const posts = [
   },
 ];
 
-const ProfileScreen = ({ navigation, getMyProfile }) => {
+const ProfileScreen = ({ navigation, getMyProfile, profile }) => {
   useEffect(() => {
     getMyProfile();
+    console.log("PROFILEEE ",profile);
   }, []);
 
   const renderItem = ({ item }) => <Post accountName={'Sama Alshareef'} uri={item.uri} />;
@@ -43,7 +46,7 @@ const ProfileScreen = ({ navigation, getMyProfile }) => {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={{flex:0.4}}>
-        <Header name={"Sama"} age={24} email={"samaelshareef@gmail.com"} />
+        <Header name={profile.name} age={profile.age} email={profile.email} />
         </View>
        
         <View style={{flex:0.6}}>
@@ -78,7 +81,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-export default connect(null, (dispatch) => {
+export default connect((profileReducer)=>{
+  return{
+    profile:profileReducer.profileReducer
+  }
+}, (dispatch) => {
   return {
     getMyProfile: () => {
       dispatch(getProfile());

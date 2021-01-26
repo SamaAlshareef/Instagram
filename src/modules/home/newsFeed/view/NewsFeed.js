@@ -25,10 +25,15 @@ const DATA = [
   },
 ];
 
-const NewsFeedScreen = ({ getPosts, navigation }) => {
+const NewsFeedScreen = ({ getPosts, navigation, posts , postAdded}) => {
   useEffect(() => {
     getPosts();
   }, []);
+
+  useEffect(() => {
+    getPosts();
+  }, [postAdded]);
+  
   const renderItem = ({ item }) => (
     <Post accountName={item.name} uri={item.uri} />
   );
@@ -40,7 +45,7 @@ const NewsFeedScreen = ({ getPosts, navigation }) => {
         title="Add Post"
       ></Button>
       <FlatList
-        data={DATA}
+        data={posts}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
@@ -51,7 +56,8 @@ const NewsFeedScreen = ({ getPosts, navigation }) => {
 export default connect(
   (postsReducer) => {
     return {
-      posts: postsReducer.posts,
+      posts: postsReducer.postsReducer.posts,
+      postAdded:postsReducer.postsReducer.postAdded
     };
   },
   (dispatch) => {

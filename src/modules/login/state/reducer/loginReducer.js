@@ -19,18 +19,18 @@ const loginReducer = (state =initialState, action) => {
     let newState  = {...initialState};
     newState.username = action.payload.username;
     newState.password = action.payload.password;
+    newState.laoding = true;
     return { 
-      ...state,
-      newState,
-      loading: true
+      ...newState,
     }
   case LOGIN_REQUEST_SUCCESS:
     const signedInState  = {...state};
     signedInState.loggedIN = true;
+    signedInState.loading = false;
+    signedInState.error = false;
+    console.log("SIgned in statae ", signedInState)
     return {
-      ...state,
-      signedInState, 
-      loading:false
+      ...signedInState
     }
   case LOGIN_REQUEST_FAIL:
     return {

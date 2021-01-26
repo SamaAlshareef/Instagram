@@ -47,7 +47,7 @@ const BucketListScreen = ({navigation}) => {
   const addWish = async (wish) => {
     console.log("PRESSED");
     let storedBucketList = await getMyObject();
-    storeData(storedBucketList.concat(wish));
+    storedBucketList? storeData(storedBucketList.concat(wish)) :  storeData(wish);
     setBucketList([...bucketList, wish]);
     setWish("");
   };

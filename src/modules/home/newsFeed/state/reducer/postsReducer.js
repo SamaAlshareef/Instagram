@@ -1,4 +1,6 @@
 import {
+  ADD_POST_REQUEST,
+  ADD_POST_SUCCESS,
   GET_POSTS_FAIL,
   GET_POSTS_REQUEST,
   GET_POSTS_SUCCESS
@@ -9,6 +11,7 @@ const initialState = {
   posts:'',
   loading:true,
   error:false,
+  postAdded:false
 }
 
 const postsReducer = (state =initialState, action) => {
@@ -17,23 +20,26 @@ const postsReducer = (state =initialState, action) => {
     let newState  = {...initialState};
     newState.loading = true
     return { 
-      ...state,
-      newState
+      ...newState
     }
   case GET_POSTS_SUCCESS:
     const postsState  = {...state};
     postsState.posts = action.payload;
     return {
-      ...state,
-      postsState
+      ...postsState
     }
   case GET_POSTS_FAIL:
     const errorState = {...initialState};
     errorState.error = true;
     return {
-      ...state,
-      errorState
+      ...errorState
     }
+    case ADD_POST_SUCCESS:
+      const postAddedState = {...state};
+      postAddedState.postAdded = true;
+      return {
+        ...postAddedState
+      }
   default:
     return {...state};
  }
