@@ -9,4 +9,4 @@ password : 12345678
 
 ## Connection to backend
 The app is connected locally to json-server 
-I attached the backend repo with the email
+The backend repo is attached in the email
