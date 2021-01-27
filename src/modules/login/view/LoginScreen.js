@@ -48,9 +48,9 @@ const LoginScreen = ({ navigation, loginRequest, error, loading }) => {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-     <ScrollView contentContainerStyle={styles.container}>
+     <ScrollView >
 
-      <View style={{ flex: 0.2 }}>
+      <View style={{ flex: 0.3 , alignItems:"center"}}>
         <Ionicons name={"logo-instagram"} size={100} color={'tomato'} />
       </View>
 
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     borderRadius: 152 / 2,
   },
   filedContainer: {
-    flex: 0.5,
+    flex: 0.6,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
