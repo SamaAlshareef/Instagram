@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import { Text, View } from "react-native";
-
 import { BucketListRouterConfig } from "./bucketlist/RouterConfig";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";

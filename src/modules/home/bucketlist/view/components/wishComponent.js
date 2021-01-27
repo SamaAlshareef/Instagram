@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -15,7 +16,9 @@ const Wish = ({ wish }) => {
   return (
     <View style={styles.container}>
       <Text>{wish}</Text>
-      <Ionicons name={"trash"} color={"red"} size={30} />
+      <TouchableOpacity>
+        <Ionicons name={"trash"} color={"red"} size={30} />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -23,13 +26,13 @@ const Wish = ({ wish }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 0.2,
-    flexDirection:'row',
+    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
   },
-  textStyle:{
-    fontWeight:'bold',
-    fontSize:40
-  }
+  textStyle: {
+    fontWeight: "bold",
+    fontSize: 40,
+  },
 });
 export default Wish;

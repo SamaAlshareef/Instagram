@@ -1,12 +1,12 @@
-import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Button, FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
 
 import Header from "./components/Header";
 import Post from "../../newsFeed/view/components/Post";
 import { connect } from "react-redux";
 import { getProfile } from "../state/action/profileActions";
-import postsReducer from '../../newsFeed/state/reducer/postsReducer';
-import profileReducer from '../state/reducer/profileReducer';
+import postsReducer from "../../newsFeed/state/reducer/postsReducer";
+import profileReducer from "../state/reducer/profileReducer";
 
 const posts = [
   {
@@ -38,26 +38,43 @@ const posts = [
 const ProfileScreen = ({ navigation, getMyProfile, profile }) => {
   useEffect(() => {
     getMyProfile();
-    console.log("PROFILEEE ",profile);
+    console.log("PROFILEEE ", profile);
   }, []);
 
-  const renderItem = ({ item }) => <Post accountName={'Sama Alshareef'} uri={item.uri} />;
+  const renderItem = ({ item }) => (
+    <Post accountName={profile.name} uri={item.uri} />
+  );
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.container}>
-        <View style={{flex:0.4}}>
-        <Header name={profile.name} age={profile.age} email={profile.email} />
+        {profile.name ? (
+          <View style={{ flex: 0.4 }}>
+            <Header
+              name={profile.name}
+              age={profile.age}
+              email={profile.email}
+            />
+          </View>
+        ) : (
+          <Button
+            title={"refresh"}
+            style={{
+              textAlign: "center",
+              textAlignVertical: "center",
+              color: "red",
+            }}
+            onPress={() => getMyProfile()}
+          ></Button>
+        )}
+
+        <View style={{ flex: 0.6 }}>
+          <Text style={styles.title}>My Posts</Text>
+          <FlatList
+            data={posts}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
         </View>
-       
-        <View style={{flex:0.6}}>
-        <Text style={styles.title}>My Posts</Text>
-        <FlatList
-          data={posts}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-        />
-        </View>
-        
       </ScrollView>
     </View>
   );
@@ -81,14 +98,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-export default connect((profileReducer)=>{
-  return{
-    profile:profileReducer.profileReducer
+export default connect(
+  (profileReducer) => {
+    return {
+      profile: profileReducer.profileReducer,
+    };
+  },
+  (dispatch) => {
+    return {
+      getMyProfile: () => {
+        dispatch(getProfile());
+      },
+    };
   }
-}, (dispatch) => {
-  return {
-    getMyProfile: () => {
-      dispatch(getProfile());
-    },
-  };
-})(ProfileScreen);
+)(ProfileScreen);

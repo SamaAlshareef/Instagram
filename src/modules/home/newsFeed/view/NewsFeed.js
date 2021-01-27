@@ -40,15 +40,27 @@ const NewsFeedScreen = ({ getPosts, navigation, posts , postAdded}) => {
 
   return (
     <View>
-      <Button
+     
+      {
+        posts?
+        <>
+        <Button
         onPress={() => navigation.push("addPost")}
         title="Add Post"
       ></Button>
-      <FlatList
+        <FlatList
         data={posts}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
+      </>
+      :
+      <Button 
+        title={'refresh'} 
+        style={{textAlign:'center', textAlignVertical:'center', color:'red'}}
+        onPress={()=>getPosts()}></Button>
+     
+      }
     </View>
   );
 };

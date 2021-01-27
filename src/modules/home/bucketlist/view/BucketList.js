@@ -17,14 +17,17 @@ import { primaryColor } from "../../../../core/Colors";
 
 const width = Dimensions.get("window").width;
 
-const BucketListScreen = ({navigation}) => {
+const BucketListScreen = ({ navigation }) => {
   const [bucketList, setBucketList] = useState([]);
   const [wish, setWish] = useState();
+  const [press, setPress] = useState();
 
   useEffect(() => {
-    let listStored =  getMyObject();
-    typeof(listStored) !== 'object'? setBucketList([listStored]) : null;
+    let listStored = getMyObject();
+    typeof listStored !== "object" ? setBucketList([listStored]) : null;
   }, []);
+
+ 
 
   const storeData = async (value) => {
     try {
@@ -45,31 +48,30 @@ const BucketListScreen = ({navigation}) => {
   };
 
   const addWish = async (wish) => {
-    console.log("PRESSED");
     let storedBucketList = await getMyObject();
-    storedBucketList? storeData(storedBucketList.concat(wish)) :  storeData(wish);
+    storedBucketList
+      ? storeData(storedBucketList.concat(wish))
+      : storeData(wish);
     setBucketList([...bucketList, wish]);
     setWish("");
   };
 
-  // const renderItem = ({ item }) => {
-  //   console.log("hello sama ", item);
-  //   <Text style={{ backgroundColor: "black", fontSize: 40 }}>
-  //     {item.title}
-  //   </Text>;
-  // };
+  const deleteItem = async(item)=>{
+    let newList = bucketList.filter(function(e) { return e !== item });
+    await setBucketList(newList);
+    await storeData(bucketList);
+    console.log("Bucket after deletion ", bucketList)
+  }
 
-  const renderItem = ({ item }) => (
-    <Wish wish={item}/>
-  );
-
+  const renderItem = ({ item }) => 
+  <TouchableOpacity 
+    onPress={() => deleteItem(item) } >
+    <Wish wish={item} />
+    </TouchableOpacity>
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        keyboardShouldPersistTaps="handled"
-      >
+      
         <View style={{ flexDirection: "row", flex: 0.2, paddingTop: 10 }}>
           <InputField
             onChangeText={(text) => setWish(text.trim())}
@@ -87,18 +89,13 @@ const BucketListScreen = ({navigation}) => {
         </View>
 
         <View style={{ flex: 0.5 }}>
-        <FlatList
-        data={bucketList}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-      />
-          {/* {  bucketList.map((item, index) => (
-            <TouchableOpacity key={index}>
-              <Wish wish={item} />
-            </TouchableOpacity>
-          ))} */}
+          <FlatList
+            data={bucketList}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
         </View>
-      </ScrollView>
+
     </View>
   );
 };
