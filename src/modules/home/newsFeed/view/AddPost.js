@@ -31,12 +31,7 @@ const DATA = [
 const AddPost = ({ addPost, navigation }) => {
   const [post, addedPost] = useState("");
 
-  useEffect(() => {
-    console.log("Hello add post ", post);
-  }, [post]);
-
   const postAdded = () => {
-    console.log("hello");
     addPost(post);
     navigation.goBack();
   };

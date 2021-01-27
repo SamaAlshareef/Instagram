@@ -4,7 +4,6 @@ import {
 } from './actionTypes';
 
 export const getPosts = () =>{
-  console.log("Gettingg postss ")
   return{
     type: GET_POSTS_REQUEST
   }

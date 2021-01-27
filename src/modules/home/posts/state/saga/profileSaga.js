@@ -15,7 +15,7 @@ export function* getProfile (){
 
   let profileDetails = '';
   let error = '';
-  console.log("Hi from Profile sagaa")
+
   let response = yield axios.get("http://10.0.2.2:3000/profile")
   .catch((e) => {
     console.log(e);
@@ -42,13 +42,13 @@ export function* getMyPosts (action){
 
   let myPosts = '';
   let error = '';
-  console.log("Hi from My posts sagaa")
+
   let response = axios
   ({
     method: 'get',
     url: 'http://10.0.0.2:3000/posts'})
   .then(function (response) {
-    console.log("hello ")
+
     // handle success
     myPosts = response.data
   })

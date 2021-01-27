@@ -24,9 +24,7 @@ const initialLoginForm = {
 };
 
 const LoginScreen = ({ navigation, loginRequest, error, loading }) => {
-  useEffect(() => {
-   console.log("Reducerr ", error)
-  }, [error])
+
   const [loginForm, setLoginForm] = useState(initialLoginForm);
   const [valid, setValid] = useState(true);
 
@@ -41,7 +39,6 @@ const LoginScreen = ({ navigation, loginRequest, error, loading }) => {
     loginRequest(loginForm);
     if(loginForm.password != '' && loginForm.username != '' && !error){
 
-      console.log("Hello from iff")
       setValid(true);
       navigation.navigate("home");
     }

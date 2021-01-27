@@ -60,7 +60,6 @@ const BucketListScreen = ({ navigation }) => {
     let newList = bucketList.filter(function(e) { return e !== item });
     await setBucketList(newList);
     await storeData(bucketList);
-    console.log("Bucket after deletion ", bucketList)
   }
 
   const renderItem = ({ item }) => 

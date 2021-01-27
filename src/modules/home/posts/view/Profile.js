@@ -38,7 +38,6 @@ const posts = [
 const ProfileScreen = ({ navigation, getMyProfile, profile }) => {
   useEffect(() => {
     getMyProfile();
-    console.log("PROFILEEE ", profile);
   }, []);
 
   const renderItem = ({ item }) => (

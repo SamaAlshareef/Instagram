@@ -28,7 +28,7 @@ const loginReducer = (state =initialState, action) => {
     signedInState.loggedIN = true;
     signedInState.loading = false;
     signedInState.error = false;
-    console.log("SIgned in statae ", signedInState)
+   
     return {
       ...signedInState
     }

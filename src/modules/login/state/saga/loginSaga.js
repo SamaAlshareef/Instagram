@@ -10,7 +10,7 @@ import axios from 'axios';
 export function* signInRequest (action){
 
   let errorMsg = '';
-console.log(action.payload)
+
   let response = yield axios.post('http://10.0.2.2:3000/login',{
       email: action.payload.username,
       password: action.payload.password})

@@ -6,7 +6,7 @@ import {
 from './actionTypes';
 
 export const loginRequest = (payload) => {
-  console.log("Loging credentials ", payload)
+
   return{
     type:LOGIN_REQUEST,
     payload

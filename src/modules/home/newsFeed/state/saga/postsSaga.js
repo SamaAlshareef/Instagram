@@ -13,7 +13,6 @@ import axios from "axios";
 export function* getPosts(action) {
   let posts = "";
   let error = "";
-  console.log("Hi from sagaa");
 
   let response = yield axios
     .get("http://10.0.2.2:3000/news-feed")
@@ -22,7 +21,6 @@ export function* getPosts(action) {
       error = true;
     });
 
-  // console.log("Responseeee: ", JSON.stringify(response.data));
 
   if (response) {
     if (response.status == 200) {
@@ -44,7 +42,6 @@ export function* getPosts(action) {
 export function* addPost(action) {
   let error = "";
 
-  console.log("Action to add a post ", action.payload)
   let response = yield axios
     .post("http://10.0.2.2:3000/news-feed", action.payload)
     .catch((e) => {
