@@ -30,6 +30,7 @@ build/
 local.properties
 *.iml
 android/java_pid20536.hprof
+*.hprof
 
 # node.js
 #
